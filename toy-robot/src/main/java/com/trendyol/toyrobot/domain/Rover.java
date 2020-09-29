@@ -1,98 +1,63 @@
 package com.trendyol.toyrobot.domain;
 
+import com.couchbase.client.core.deps.com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.trendyol.toyrobot.domain.compass.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Rover<T> {
+
+@Getter
+@Setter
+@JsonSerialize
+public class Rover {
 
     private String id;
-    private int x;
-    private int y;
+    private Position position;
     private Compass compass;
     private List<Material> material;
 
-    public Rover() {
-        this.id = UUID.randomUUID().toString();
-        this.x = 0;
-        this.y = 0;
-        this.compass = Compass.NORTH;
-        this.material = new ArrayList<>();
-    }
 
-    public Rover(int x, int y, Compass compass) {
-        this.id = UUID.randomUUID().toString();
-        this.x = x;
-        this.y = y;
-        this.compass = compass;
-        this.material = new ArrayList<>();
-    }
-
-    public void move() {
-       switch (this.compass) {
-            case NORTH:
-                this.y++;
-                break;
-            case EAST:
-                this.x++;
-                break;
-            case SOUTH:
-                this.y--;
-                break;
-            case WEST:
-                this.x--;
-        }
+    public void move(){
+        compass.move(this.position);
         this.material.add(new Material(this.compass.name()));
     }
-
     public void turnLeft() {
-        this.compass = Compass.findCompass(Compass.getId(this.compass) - 1);
+        this.compass = compass.turnLeft();
         this.material.add(new Material(this.compass.name()));
     }
 
     public void turnRight() {
-        this.compass = Compass.findCompass(Compass.getId(this.compass) + 1);
+        this.compass = compass.turnRight();
         this.material.add(new Material(this.compass.name()));
     }
 
-    public String getId() {
-        return id;
+    public Rover() {
+        this.id = UUID.randomUUID().toString();
+        this.position = new Position(0, 0);
+        this.compass = new North();
+        this.material = new ArrayList<>();
     }
-
-    public int getX() {
-        return this.x;
+    public Rover(Position position) {
+        this.id = UUID.randomUUID().toString();
+        this.position = position;
+        this.compass = new North();
+        this.material = new ArrayList<>();
     }
-
-    public int getY() {
-        return this.y;
-    }
-
-    public Compass getCompass() {
-        return this.compass;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setCompass(Compass compass) {
+    public Rover(Position position, Compass compass) {
+        this.id = UUID.randomUUID().toString();
+        this.position = position;
         this.compass = compass;
+        this.material = new ArrayList<>();
     }
 
-    public List<Material> getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(List<Material> material) {
+    public Rover(String id, Position position, Compass compass, List<Material> material) {
+        this.id = id;
+        this.position = position;
+        this.compass = compass;
         this.material = material;
     }
 }

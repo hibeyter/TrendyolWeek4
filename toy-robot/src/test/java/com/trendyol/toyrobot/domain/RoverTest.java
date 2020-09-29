@@ -1,113 +1,118 @@
 package com.trendyol.toyrobot.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.trendyol.toyrobot.domain.compass.East;
+import com.trendyol.toyrobot.domain.compass.Position;
+import com.trendyol.toyrobot.domain.compass.South;
+import com.trendyol.toyrobot.domain.compass.West;
 import org.junit.jupiter.api.Test;
 
-public class RoverTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+public class RoverTest {
     @Test
     public void should_create_rover() {
         Rover rover = createNorthRover();
-        assertEquals(0, rover.getX());
-        assertEquals(0, rover.getY());
-        assertEquals(Compass.NORTH, rover.getCompass());
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
+        assertEquals("North", rover.getCompass().name());
     }
 
     @Test
     public void should_move_forward_when_compass_is_north() {
         Rover rover = createNorthRover();
         rover.move();
-        assertEquals(1, rover.getY());
+        assertEquals(1, rover.getPosition().getY());
     }
 
     @Test
     public void should_move_forward_when_compass_is_east() {
         Rover rover = createEastRover();
         rover.move();
-        assertEquals(1, rover.getX());
+        assertEquals(1, rover.getPosition().getX());
     }
 
     @Test
     public void should_move_forward_when_compass_is_south() {
         Rover rover = createSouthRover();
         rover.move();
-        assertEquals(-1, rover.getY());
+        assertEquals(-1, rover.getPosition().getY());
     }
 
     @Test
     public void should_move_forward_when_compass_is_west() {
         Rover rover = createWestRover();
         rover.move();
-        assertEquals(-1, rover.getX());
+        assertEquals(-1, rover.getPosition().getX());
     }
 
     @Test
     public void should_turn_left_when_compass_is_north() {
         Rover rover = createNorthRover();
         rover.turnLeft();
-        assertEquals(Compass.WEST, rover.getCompass());
+        assertEquals("West", rover.getCompass().name());
     }
 
     @Test
     public void should_turn_left_when_compass_is_west() {
         Rover rover = createWestRover();
         rover.turnLeft();
-        assertEquals(Compass.SOUTH, rover.getCompass());
+        assertEquals("South", rover.getCompass().name());
     }
 
     @Test
     public void should_turn_left_when_compass_is_south() {
         Rover rover = createSouthRover();
         rover.turnLeft();
-        assertEquals(Compass.EAST, rover.getCompass());
+        assertEquals("East", rover.getCompass().name());
     }
 
     @Test
     public void should_turn_left_when_compass_is_east() {
         Rover rover = createEastRover();
         rover.turnLeft();
-        assertEquals(Compass.NORTH, rover.getCompass());
+        assertEquals("North", rover.getCompass().name());
     }
 
     @Test
     public void should_turn_right_when_compass_is_north () {
         Rover rover = createNorthRover();
         rover.turnRight();
-        assertEquals(Compass.EAST, rover.getCompass());
+        assertEquals("East", rover.getCompass().name());
     }
 
     @Test
     public void should_turn_right_when_compass_is_east() {
         Rover rover = createEastRover();
         rover.turnRight();
-        assertEquals(Compass.SOUTH, rover.getCompass());
+        assertEquals("South", rover.getCompass().name());
     }
 
     @Test
     public void should_turn_right_when_compass_is_south() {
         Rover rover = createSouthRover();
         rover.turnRight();
-        assertEquals(Compass.WEST, rover.getCompass());
+        assertEquals("West", rover.getCompass().name());
     }
 
     @Test
     public void should_turn_right_when_compass_is_west () {
         Rover rover = createWestRover();
         rover.turnRight();
-        assertEquals(Compass.NORTH, rover.getCompass());
+        assertEquals("North", rover.getCompass().name());
     }
 
     private Rover createWestRover() {
-        return new Rover(0, 0, Compass.WEST);
+
+        return new Rover(new Position(0,0) ,new West());
     }
 
     private Rover createSouthRover() {
-        return new Rover(0, 0, Compass.SOUTH);
+
+        return new Rover(new Position(0,0) ,new South());
     }
 
     private Rover createEastRover() {
-        return new Rover(0, 0, Compass.EAST);
+        return new Rover(new Position(0,0) ,new East());
     }
 
     private Rover createNorthRover() {

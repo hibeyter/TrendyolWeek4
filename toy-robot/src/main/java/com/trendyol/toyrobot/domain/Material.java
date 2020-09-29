@@ -1,5 +1,8 @@
 package com.trendyol.toyrobot.domain;
 
+import lombok.ToString;
+
+@ToString
 public class Material {
     private String name;
 
