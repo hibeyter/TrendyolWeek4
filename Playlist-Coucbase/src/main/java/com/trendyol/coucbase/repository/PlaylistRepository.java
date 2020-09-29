@@ -50,11 +50,13 @@ public class PlaylistRepository {
     public void addTrack(String id, Track track){
         Playlist playlist =  findById(id);
         playlist.getTracks().add(track);
+        playlist.changeTrackCount();
         playListCollection.replace(playlist.getId(),playlist);
     }
     public void deleteTrack(String id, Track track){
         Playlist playlist =  findById(id);
         playlist.getTracks().remove(track);
+        playlist.changeTrackCount();
         playListCollection.replace(playlist.getId(),playlist);
     }
 }

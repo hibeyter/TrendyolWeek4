@@ -14,9 +14,15 @@ public class Playlist {
     private String description;
     private int followers;
     private List<Track> tracks;
+    private int trackCount;
     private String userId;
+
     public Playlist() {
-        this.id= UUID.randomUUID().toString();
-        this.tracks=new ArrayList<>();
+        this.id = UUID.randomUUID().toString();
+        this.tracks = new ArrayList<>();
+    }
+
+    public void changeTrackCount() {
+        this.trackCount = tracks.size();
     }
 }
