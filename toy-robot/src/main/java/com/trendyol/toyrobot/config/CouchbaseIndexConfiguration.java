@@ -15,6 +15,11 @@ public class CouchbaseIndexConfiguration {
 
     @Bean
     public void createIndexes() {
-       // couchbaseCluster.query("CREATE INDEX bootcampArray ON `rover`(DISTINCT ARRAY `m`.`name` FOR m in `material` END)");
+        try {
+            couchbaseCluster.query("CREATE INDEX bootcampArray ON `rover`(DISTINCT ARRAY `m`.`name` FOR m in `material` END)");
+
+        } catch (Exception e) {
+            // TODO: 29.09.2020   
+        }
     }
 }
